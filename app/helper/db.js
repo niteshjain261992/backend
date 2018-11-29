@@ -4,16 +4,13 @@ const MongoClient = require('mongodb').MongoClient;
 class DbCtrl {
   connectDb() {
     return new Promise((resolve, reject)=> {
-      const url =  `mongodb://${config.database.serverUrl}:27017`;
-      console.log(url);
-      MongoClient.connect(url, (err, client)=> {
+      const url =  `mongodb://${config.database.serverUrl}:27017/${config.database.name}`;
+      return resolve();
+      MongoClient.connect(url, (err, db)=> {
         if (err) {
           console.error('error while connecting with database');
           return reject(err);
         }
-
-        const db = client.db(config.database.name);
-        client.close();
 
         resolve(db);
       })
